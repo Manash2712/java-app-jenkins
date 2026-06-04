@@ -28,7 +28,12 @@ pipeline {
         }
         stage("Docker Build"){
             steps{
-                sh "docker build -t manashchauhan/java-app-jenkins:{env.DOCKER_TAG} ."
+                sh "docker build -t manashchauhan/java-app-jenkins:${env.DOCKER_TAG} ."
+            }
+        }
+        stage("Trivy Scan"){
+            steps{
+                sh "trivy image --severity HIGH,CRITICAL --exit-code 1 manashchauhan/java-app-jenkins:${env.DOCKER_TAG}"
             }
         }
     }
