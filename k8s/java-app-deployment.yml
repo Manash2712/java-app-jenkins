@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: java-app
-          image: 'manashchauhan/java-app-jenkins:'
+          image: 'manashchauhan/java-app-jenkins:null'
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
