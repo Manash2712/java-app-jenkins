@@ -46,6 +46,11 @@ pipeline {
                 }
             }
         }
+        stage("Update k8s Manifest files"){
+            steps{
+                sh 'yq -i ".spec.template.spec.containers[0].image = \\"manashchauhan/java-app-jenkins:\\" + strenv(DOCKER_TAG)" ./k8s/java-app-deployment.yml'
+            }
+        }
     }
 }
 def getShortCommitHash(){
