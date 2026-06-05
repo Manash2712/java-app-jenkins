@@ -51,6 +51,19 @@ pipeline {
                 sh 'yq -i ".spec.template.spec.containers[0].image = \\"manashchauhan/java-app-jenkins:\\" + strenv(DOCKER_TAG)" ./k8s/java-app-deployment.yml'
             }
         }
+        stage("Push k8s changes"){
+            steps{
+                withCredentials([gitUsernamePassword(credentialsId: 'github-cred', gitToolName: 'Default')]) {
+                    sh '''
+                        git config user.email "jenkins@manash.in"
+                        git config user.name "jenkins build"
+                        git add .
+                        git commit -m "Jenkins updated k8s manifest file"
+                        git push origin main
+                    '''
+                }
+            }
+        }
     }
 }
 def getShortCommitHash(){
