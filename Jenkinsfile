@@ -1,15 +1,17 @@
 pipeline {
     agent any
     environment{
-        DOCKER_TAG = ""
+        DOCKER_TAG = getShortCommitHash()
     }
     stages {
         stage('Code Checkout'){
             steps{
                 git branch: 'main', url: 'https://github.com/Manash2712/java-app-jenkins'
+                /*
                 script{
                     env.DOCKER_TAG = getShortCommitHash()
                 }
+                */
             }
         }
         /*
